@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hex Dominion</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="Hex Dominion">
+          <span class="brand-mark">HD</span>
+          <span>
+            <strong>Hex Dominion</strong>
+            <small>Turn-based empire game</small>
+          </span>
+        </div>
+        <div class="yield-bar" id="yieldBar"></div>
+        <div class="top-actions">
+          <button class="ghost-button" id="saveGameButton" type="button">Save</button>
+          <button class="ghost-button" id="newGameButton" type="button">New Game</button>
+          <button class="primary-button" id="endTurnButton" type="button">End Turn</button>
+        </div>
+      </header>
+
+      <main class="game-grid">
+        <aside class="panel left-panel">
+          <section class="panel-section" id="selectionPanel"></section>
+          <section class="panel-section" id="researchPanel"></section>
+        </aside>
+
+        <section class="map-stage" aria-label="Game map">
+          <canvas id="mapCanvas"></canvas>
+          <div class="map-overlay" id="mapOverlay">
+            <div class="turn-pill" id="turnPill"></div>
+            <div class="hint-pill" id="hintPill"></div>
+          </div>
+        </section>
+
+        <aside class="panel right-panel">
+          <section class="panel-section" id="empirePanel"></section>
+          <section class="panel-section" id="productionPanel"></section>
+          <section class="panel-section log-section">
+            <div class="section-title">
+              <h2>World Log</h2>
+              <button class="mini-button" id="clearLogButton" type="button">Clear</button>
+            </div>
+            <ol class="event-log" id="eventLog"></ol>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="actionbar" id="actionBar"></footer>
+    </div>
+
+    <div class="modal hidden" id="gameModal" role="dialog" aria-modal="true">
+      <div class="modal-panel">
+        <p class="eyebrow" id="modalEyebrow"></p>
+        <h1 id="modalTitle"></h1>
+        <p id="modalBody"></p>
+        <div class="modal-actions">
+          <button class="ghost-button" id="modalCloseButton" type="button">Continue</button>
+          <button class="primary-button" id="modalRestartButton" type="button">New Game</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/main.js"></script>
+  </body>
+</html>
