@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>文明6 网页版 · Opus47</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="brand">文明6 · 网页版</div>
+      <div class="stats">
+        <span title="回合">回合 <b id="stat-turn">1</b></span>
+        <span title="金币">💰 <b id="stat-gold">0</b> <i id="stat-gold-delta">(+0)</i></span>
+        <span title="科技">🔬 <b id="stat-science">0</b>/回合</span>
+        <span title="文化">🎭 <b id="stat-culture">0</b>/回合</span>
+        <span title="信仰">✨ <b id="stat-faith">0</b>/回合</span>
+        <span title="人口">👥 <b id="stat-pop">0</b></span>
+        <span title="城市">🏙️ <b id="stat-cities">0</b></span>
+      </div>
+      <div class="actions-top">
+        <button id="btn-tech">科技树</button>
+        <button id="btn-civic">文化树</button>
+        <button id="btn-diplo">外交</button>
+        <button id="btn-save">保存</button>
+        <button id="btn-load">读档</button>
+        <button id="btn-new">新游戏</button>
+        <button id="btn-help">帮助</button>
+        <button id="btn-end-turn" class="primary">结束回合</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <aside id="sidebar-left">
+        <div class="panel" id="panel-research">
+          <h3>当前研究</h3>
+          <div id="research-current">无</div>
+          <h3>当前市政</h3>
+          <div id="civic-current">无</div>
+        </div>
+        <div class="panel" id="panel-notifications">
+          <h3>通知</h3>
+          <ul id="notif-list"></ul>
+        </div>
+      </aside>
+
+      <section id="map-wrap">
+        <canvas id="map" width="1200" height="800"></canvas>
+        <div id="tooltip" class="hidden"></div>
+      </section>
+
+      <aside id="sidebar-right">
+        <div class="panel" id="panel-selection">
+          <h3>选中</h3>
+          <div id="sel-content">点击地图上的单位或城市</div>
+        </div>
+        <div class="panel" id="panel-civs">
+          <h3>文明列表</h3>
+          <ul id="civ-list"></ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer id="actionbar">
+      <div id="action-buttons"></div>
+      <div id="hint">提示：用鼠标拖动可平移地图，滚轮缩放。</div>
+    </footer>
+  </div>
+
+  <!-- 模态层 -->
+  <div id="modal-root" class="hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2 id="modal-title">标题</h2>
+        <button id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

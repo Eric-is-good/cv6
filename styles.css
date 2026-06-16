@@ -1,0 +1,148 @@
+/* 文明6 网页版 · 暗色金棕色调 */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif; color: #e8e2cf; background: #1a1410; overflow: hidden; }
+
+#app { display: grid; grid-template-rows: 48px 1fr 64px; height: 100vh; }
+
+#topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, #2c2218 0%, #1f170f 100%);
+  border-bottom: 2px solid #6b4f2a;
+  padding: 0 14px; gap: 16px;
+}
+.brand { font-size: 18px; font-weight: bold; color: #f5d36b; letter-spacing: 1px; }
+.stats { display: flex; gap: 14px; font-size: 13px; }
+.stats span { display: flex; align-items: baseline; gap: 4px; }
+.stats b { color: #f5d36b; }
+.stats i { font-style: normal; color: #8fcf6b; font-size: 11px; }
+.actions-top { display: flex; gap: 6px; }
+.actions-top button, #actionbar button {
+  padding: 6px 12px; border: 1px solid #6b4f2a; background: #2c2218;
+  color: #e8e2cf; border-radius: 4px; cursor: pointer; font-size: 13px;
+  transition: background .15s, transform .05s;
+}
+.actions-top button:hover, #actionbar button:hover { background: #3d2e1d; }
+.actions-top button:active, #actionbar button:active { transform: translateY(1px); }
+.actions-top button.primary { background: #6b4f2a; color: #fff7d6; border-color: #f5d36b; }
+.actions-top button.primary:hover { background: #8a6534; }
+
+#main { display: grid; grid-template-columns: 240px 1fr 260px; overflow: hidden; }
+
+aside { background: #221912; overflow-y: auto; border-color: #6b4f2a; }
+#sidebar-left { border-right: 1px solid #6b4f2a; }
+#sidebar-right { border-left: 1px solid #6b4f2a; }
+
+.panel {
+  margin: 8px; padding: 8px; background: #2c2218;
+  border: 1px solid #5a4222; border-radius: 4px;
+}
+.panel h3 {
+  margin: 0 0 6px 0; padding-bottom: 4px;
+  color: #f5d36b; font-size: 13px;
+  border-bottom: 1px solid #5a4222;
+}
+.panel ul { list-style: none; padding: 0; margin: 0; font-size: 12px; }
+.panel li { padding: 4px 2px; border-bottom: 1px dashed #3d2e1d; }
+.panel li:last-child { border-bottom: 0; }
+
+#map-wrap { position: relative; background: #0e1318; overflow: hidden; }
+#map { display: block; cursor: grab; }
+#map.dragging { cursor: grabbing; }
+
+#tooltip {
+  position: absolute; pointer-events: none;
+  background: rgba(20, 16, 12, 0.94);
+  border: 1px solid #f5d36b; border-radius: 4px;
+  padding: 6px 10px; font-size: 12px; color: #e8e2cf;
+  max-width: 240px; line-height: 1.5;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+  z-index: 10;
+}
+.hidden { display: none !important; }
+
+#actionbar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(0deg, #2c2218 0%, #1f170f 100%);
+  border-top: 2px solid #6b4f2a; padding: 0 14px;
+}
+#action-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+#hint { font-size: 12px; color: #8c7d61; }
+
+#notif-list li.warn { color: #f5b86b; }
+#notif-list li.bad { color: #e87a7a; }
+#notif-list li.good { color: #8fcf6b; }
+
+/* 选中面板 */
+#sel-content { font-size: 13px; line-height: 1.6; }
+#sel-content .row { display: flex; justify-content: space-between; margin: 2px 0; }
+#sel-content .row b { color: #f5d36b; }
+#sel-content h4 { margin: 8px 0 4px 0; font-size: 13px; color: #f5d36b; }
+#sel-content .hp-bar { background: #3d2e1d; border-radius: 3px; height: 8px; overflow: hidden; margin: 4px 0; }
+#sel-content .hp-bar > div { background: linear-gradient(90deg, #8fcf6b, #5a9a3a); height: 100%; }
+#sel-content button {
+  margin: 4px 4px 0 0; padding: 4px 10px;
+  border: 1px solid #6b4f2a; background: #3d2e1d; color: #e8e2cf;
+  border-radius: 3px; cursor: pointer; font-size: 12px;
+}
+#sel-content button:hover { background: #5a4222; }
+#sel-content button:disabled { color: #6b6155; cursor: not-allowed; background: #2c2218; }
+
+/* 城市生产队列 */
+.queue-item {
+  display: flex; justify-content: space-between; padding: 4px;
+  background: #221912; border: 1px solid #5a4222; border-radius: 3px;
+  margin-bottom: 2px; font-size: 12px;
+}
+
+/* 文明列表 */
+#civ-list li { display: flex; align-items: center; gap: 6px; }
+.civ-color { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #6b4f2a; }
+.civ-name { flex: 1; }
+.civ-score { color: #f5d36b; font-weight: bold; }
+.civ-dead { text-decoration: line-through; opacity: 0.5; }
+
+/* 模态 */
+#modal-root { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+.modal-window {
+  position: relative; width: 80vw; max-width: 900px; max-height: 80vh;
+  background: #2c2218; border: 2px solid #f5d36b; border-radius: 6px;
+  display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 16px; border-bottom: 1px solid #6b4f2a;
+}
+.modal-header h2 { margin: 0; color: #f5d36b; font-size: 18px; }
+#modal-close {
+  background: none; border: 0; color: #e8e2cf; font-size: 18px;
+  cursor: pointer; padding: 0 6px;
+}
+.modal-body { padding: 12px 16px; overflow-y: auto; flex: 1; }
+
+/* 科技/文化树渲染 */
+.tree-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.tree-node {
+  padding: 8px; background: #221912; border: 1px solid #5a4222;
+  border-radius: 4px; cursor: pointer; transition: background .15s;
+}
+.tree-node:hover { background: #3d2e1d; }
+.tree-node.researched { border-color: #8fcf6b; background: #1f2818; }
+.tree-node.current { border-color: #f5d36b; box-shadow: 0 0 6px #f5d36b80; }
+.tree-node.locked { opacity: 0.5; cursor: not-allowed; }
+.tree-node .tn-name { font-weight: bold; color: #f5d36b; font-size: 13px; }
+.tree-node .tn-cost { font-size: 11px; color: #8c7d61; margin-top: 2px; }
+.tree-node .tn-unlocks { font-size: 11px; margin-top: 4px; color: #a8a08c; }
+
+/* 外交 */
+.diplo-civ {
+  padding: 10px; background: #221912; border: 1px solid #5a4222;
+  border-radius: 4px; margin-bottom: 8px;
+}
+.diplo-civ h3 { margin: 0 0 6px 0; }
+.diplo-actions { display: flex; gap: 6px; margin-top: 6px; }
+
+/* 帮助 */
+.help-section { margin-bottom: 12px; }
+.help-section h3 { color: #f5d36b; margin: 0 0 4px 0; }
+.help-section p, .help-section li { font-size: 13px; line-height: 1.6; }
