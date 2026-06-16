@@ -1,0 +1,173 @@
+/* ===== 文明6 网页版 · 样式 ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0e1419;
+  --panel: #1b2530;
+  --panel2: #243140;
+  --accent: #d9a441;
+  --accent2: #4ea1d3;
+  --good: #5dbb63;
+  --bad: #d9534f;
+  --text: #e8edf2;
+  --muted: #8a99ac;
+  --border: #33455a;
+}
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  user-select: none;
+}
+#app { position: relative; width: 100vw; height: 100vh; }
+#map { display: block; width: 100%; height: 100%; cursor: crosshair; }
+
+/* 顶部栏 */
+#topbar {
+  position: absolute; top: 0; left: 0; right: 0; height: 64px;
+  display: flex; align-items: center; gap: 16px; padding: 0 16px;
+  background: linear-gradient(180deg, rgba(15,22,30,0.97), rgba(15,22,30,0.82));
+  border-bottom: 2px solid var(--accent); z-index: 20;
+}
+.civ-badge { display: flex; align-items: center; gap: 10px; min-width: 150px; }
+#civFlag {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: #2a1d05; font-size: 18px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; border: 2px solid #fff5;
+}
+.civ-info #civName { font-size: 16px; font-weight: 700; }
+.muted { color: var(--muted); font-size: 12px; }
+.yields { display: flex; gap: 14px; font-size: 14px; font-weight: 600; }
+.yield { display: flex; align-items: center; gap: 4px; }
+.yield .ic { font-size: 15px; }
+.y-f { color: #6fd36f; } .y-p { color: #d9a441; } .y-g { color: #ffd86b; }
+.y-s { color: #6fb4ff; } .y-c { color: #c08bf0; } .y-h { color: #ff8b8b; }
+
+.research-box {
+  margin-left: auto; min-width: 240px; cursor: pointer;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 10px;
+}
+.research-box:hover { border-color: var(--accent2); }
+.r-label { font-size: 13px; font-weight: 600; color: var(--accent2); }
+.r-bar { height: 6px; background: #0c1117; border-radius: 3px; margin: 4px 0 2px; overflow: hidden; }
+#rFill { height: 100%; width: 0; background: var(--accent2); transition: width .3s; }
+.r-text { font-size: 11px; color: var(--muted); }
+.top-actions { display: flex; gap: 8px; }
+.btn {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--border);
+  padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;
+  transition: .15s;
+}
+.btn:hover { background: #2f4458; border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: #2a1d05; border-color: var(--accent); }
+.btn.primary:hover { background: #e6b25a; }
+.btn.big { font-size: 16px; padding: 12px 28px; margin-top: 12px; }
+.btn:disabled { opacity: .4; cursor: default; }
+.btn.close { padding: 4px 10px; }
+
+/* 面板 */
+.panel {
+  position: absolute; left: 16px; bottom: 16px; width: 280px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; z-index: 15; box-shadow: 0 8px 24px #0006;
+}
+.hidden { display: none !important; }
+.panel h3 { font-size: 15px; margin-bottom: 8px; color: var(--accent); }
+.panel .row { display: flex; justify-content: space-between; font-size: 13px; margin: 3px 0; }
+.panel .stat { display: flex; gap: 6px; align-items: center; }
+
+/* 动作栏 */
+#actionbar {
+  position: absolute; right: 16px; bottom: 16px; z-index: 15;
+  display: flex; gap: 8px; flex-wrap: wrap; max-width: 360px; justify-content: flex-end;
+}
+#actionbar .btn { min-width: 72px; text-align: center; }
+
+/* 通知 */
+#notifications {
+  position: absolute; top: 80px; right: 16px; width: 320px; z-index: 18;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.notif {
+  background: var(--panel); border-left: 4px solid var(--accent2);
+  padding: 10px 12px; border-radius: 6px; font-size: 13px; box-shadow: 0 4px 12px #0005;
+  animation: slideIn .3s ease; cursor: pointer;
+}
+.notif.warn { border-left-color: var(--bad); }
+.notif.good { border-left-color: var(--good); }
+@keyframes slideIn { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* 模态框 */
+.modal {
+  position: absolute; inset: 0; background: #000a; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+  background: var(--panel); border: 1px solid var(--accent); border-radius: 12px;
+  width: 520px; max-width: 92vw; max-height: 86vh; overflow: auto; padding: 20px;
+}
+.modal-content.wide { width: 860px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.modal-header h2 { font-size: 20px; color: var(--accent); }
+
+.start-body, .end-body { text-align: center; }
+.start-body p { margin-bottom: 14px; }
+.field { margin: 12px 0; text-align: left; }
+.field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.field input, .field select {
+  width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  padding: 10px; border-radius: 6px; font-size: 14px;
+}
+
+/* 城市面板 */
+.city-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.city-stats .row { margin: 4px 0; font-size: 13px; }
+.city-progress { margin: 8px 0; }
+.bar { height: 14px; background: #0c1117; border-radius: 7px; overflow: hidden; position: relative; }
+.bar > div { height: 100%; }
+.bar .food { background: #6fd36f; } .bar .prod { background: #d9a441; }
+.bar-label { font-size: 12px; color: var(--muted); margin: 2px 0; }
+.prod-list { max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+.prod-item {
+  display: flex; justify-content: space-between; align-items: center; padding: 8px 10px;
+  border-bottom: 1px solid var(--border); cursor: pointer; font-size: 13px;
+}
+.prod-item:hover { background: var(--panel2); }
+.prod-item.current { background: #2c3e52; }
+.prod-item .cost { color: var(--accent2); font-size: 12px; }
+.prod-item.locked { opacity: .4; cursor: not-allowed; }
+.building-list .b-item { font-size: 12px; color: var(--muted); margin: 2px 0; }
+
+/* 科技树面板 */
+.tech-body-wrap { overflow: auto; max-height: 70vh; }
+.tech-node {
+  display: inline-block; width: 150px; margin: 6px; vertical-align: top;
+  background: var(--panel2); border: 1px solid var(--border); border-radius: 8px; padding: 8px;
+  cursor: pointer; text-align: center; position: relative;
+}
+.tech-node.done { border-color: var(--good); background: #1f3a26; }
+.tech-node.current { border-color: var(--accent2); box-shadow: 0 0 0 2px var(--accent2); }
+.tech-node.available { border-color: var(--accent); }
+.tech-node.locked { opacity: .5; cursor: not-allowed; }
+.tech-node .t-name { font-weight: 700; font-size: 13px; }
+.tech-node .t-cost { font-size: 11px; color: var(--accent2); }
+.tech-era { color: var(--accent); font-size: 14px; font-weight: 700; margin: 10px 0 2px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+
+/* 帮助/日志 */
+.help-body { font-size: 13px; line-height: 1.7; }
+.help-body h3 { color: var(--accent2); margin: 10px 0 4px; }
+.help-body li { margin-left: 18px; }
+#logBody { font-size: 13px; line-height: 1.6; max-height: 60vh; overflow: auto; }
+#logBody .l { margin: 2px 0; }
+#logBody .l span { color: var(--muted); margin-right: 6px; }
+
+/* 选中单位提示 */
+.hint {
+  position: absolute; top: 72px; left: 50%; transform: translateX(-50%);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
+  padding: 6px 16px; font-size: 13px; z-index: 12; color: var(--accent2);
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-track { background: transparent; }

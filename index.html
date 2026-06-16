@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文明6 · 网页版</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="map"></canvas>
+
+    <!-- 顶部状态栏 -->
+    <div id="topbar">
+      <div class="civ-badge">
+        <span id="civFlag">旗</span>
+        <div class="civ-info">
+          <div id="civName">中华</div>
+          <div id="civSub" class="muted">第 1 回合</div>
+        </div>
+      </div>
+      <div class="yields" id="yields"></div>
+      <div class="research-box" id="researchBox" title="点击切换研究">
+        <div class="r-label"><span id="rName">（未研究）</span></div>
+        <div class="r-bar"><div id="rFill"></div></div>
+        <div class="r-text" id="rText"></div>
+      </div>
+      <div class="top-actions">
+        <button id="btnTech" class="btn">科技树</button>
+        <button id="btnLog" class="btn">日志</button>
+        <button id="btnHelp" class="btn">帮助</button>
+        <button id="btnEndTurn" class="btn primary">结束回合</button>
+      </div>
+    </div>
+
+    <!-- 左下：单位/选中面板 -->
+    <div id="sidepanel" class="panel hidden"></div>
+
+    <!-- 右下：单位动作栏 -->
+    <div id="actionbar" class="hidden"></div>
+
+    <!-- 通知 -->
+    <div id="notifications"></div>
+
+    <!-- 城市面板 -->
+    <div id="cityModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="cityTitle">城市</h2>
+          <button class="btn close" id="cityClose">✕</button>
+        </div>
+        <div id="cityBody"></div>
+      </div>
+    </div>
+
+    <!-- 科技树面板 -->
+    <div id="techModal" class="modal hidden">
+      <div class="modal-content wide">
+        <div class="modal-header">
+          <h2>科技树</h2>
+          <button class="btn close" id="techClose">✕</button>
+        </div>
+        <div id="techBody"></div>
+      </div>
+    </div>
+
+    <!-- 帮助 -->
+    <div id="helpModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header"><h2>游戏指南</h2><button class="btn close" id="helpClose">✕</button></div>
+        <div id="helpBody" class="help-body"></div>
+      </div>
+    </div>
+
+    <!-- 日志 -->
+    <div id="logModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header"><h2>事件日志</h2><button class="btn close" id="logClose">✕</button></div>
+        <div id="logBody"></div>
+      </div>
+    </div>
+
+    <!-- 开始界面 -->
+    <div id="startModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header"><h2>文明 6 · 网页版</h2></div>
+        <div class="start-body">
+          <p class="muted">一款回合制 4X 策略游戏。开拓疆土，研究科技，建立文明伟业。</p>
+          <div class="field">
+            <label>文明名称</label>
+            <input id="startCivName" value="中华" maxlength="6" />
+          </div>
+          <div class="field">
+            <label>领袖</label>
+            <input id="startLeader" value="始皇" maxlength="6" />
+          </div>
+          <div class="field">
+            <label>地图大小</label>
+            <select id="startSize">
+              <option value="small">小型 (24×16)</option>
+              <option value="medium" selected>中型 (32×20)</option>
+              <option value="large">大型 (40×24)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>对手数量</label>
+            <select id="startEnemies">
+              <option value="2">2 个</option>
+              <option value="3" selected>3 个</option>
+              <option value="4">4 个</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>难度</label>
+            <select id="startDiff">
+              <option value="easy">开拓者（简单）</option>
+              <option value="normal" selected>酋长（普通）</option>
+              <option value="hard">王子（困难）</option>
+            </select>
+          </div>
+          <button id="startBtn" class="btn primary big">开始游戏</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 胜负界面 -->
+    <div id="endModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header"><h2 id="endTitle"></h2></div>
+        <div class="end-body">
+          <div id="endText"></div>
+          <button id="endBtn" class="btn primary big">重新开始</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 脚本（经典脚本，按顺序加载） -->
+  <script src="js/util.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/units.js"></script>
+  <script src="js/cities.js"></script>
+  <script src="js/tech.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
