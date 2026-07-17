@@ -3,111 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#08111f" />
-    <title>CV6 · Dawn of Nations</title>
+    <meta name="theme-color" content="#07111d" />
+    <title>CV6 · 文明长河</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#mapGrid">跳到地图</a>
-    <div class="app-shell">
+    <a class="skip-link" href="#mapGrid">跳到世界地图</a>
+    <div class="app" id="app">
       <header class="topbar">
-        <div class="brand-lockup">
-          <div class="brand-mark" aria-hidden="true">CV</div>
-          <div>
-            <p class="eyebrow">CIVILIZATION VI · WEB EDITION</p>
-            <h1>Dawn of Nations</h1>
-          </div>
+        <div class="brand">
+          <span class="brand-seal" aria-hidden="true">VI</span>
+          <div><span>SID MEIER'S</span><strong>CIVILIZATION</strong></div>
         </div>
-        <div class="topbar-center" aria-live="polite">
-          <span class="season-dot"></span>
-          <span id="eraLabel">古典时代 · 第 24 回合</span>
+
+        <div class="turn-calendar" aria-live="polite">
+          <span id="eraName">远古时代</span>
+          <strong id="yearLabel">公元前 4000 年</strong>
+          <small id="turnLabel">第 1 回合 · 王子</small>
         </div>
-        <div class="topbar-actions">
-          <button class="icon-button" id="soundToggle" type="button" aria-label="切换音效" title="切换音效">◒</button>
-          <button class="icon-button" id="helpButton" type="button" aria-label="查看玩法说明" title="玩法说明">?</button>
-          <button class="end-turn-button" id="endTurnButton" type="button">结束回合 <span>↵</span></button>
+
+        <div class="resource-bar" aria-label="文明资源">
+          <div class="resource science"><i>⚗</i><span><b id="sciencePerTurn">+0</b><small>科技</small></span></div>
+          <div class="resource culture"><i>❖</i><span><b id="culturePerTurn">+0</b><small>文化</small></span></div>
+          <div class="resource gold"><i>◈</i><span><b id="goldTotal">0</b><small id="goldPerTurn">+0/回合</small></span></div>
+          <div class="resource faith"><i>✦</i><span><b id="faithTotal">0</b><small>信仰</small></span></div>
         </div>
+
+        <nav class="top-actions" aria-label="游戏菜单">
+          <button class="top-action research-button" id="researchButton" type="button"><span>⚗</span><div><small>科技</small><b id="researchName">选择研究</b></div></button>
+          <button class="top-action civic-button" id="civicButton" type="button"><span>❖</span><div><small>市政</small><b id="civicName">选择市政</b></div></button>
+          <button class="round-button" id="diplomacyButton" type="button" aria-label="外交" title="外交">♜</button>
+          <button class="round-button" id="menuButton" type="button" aria-label="游戏菜单" title="游戏菜单">☰</button>
+          <button class="end-turn" id="endTurnButton" type="button"><span id="endTurnText">下一回合</span><b>↵</b></button>
+        </nav>
       </header>
 
-      <main class="game-layout">
-        <aside class="empire-sidebar panel">
-          <div class="leader-card">
-            <div class="leader-avatar">⌘</div>
-            <div>
-              <p class="eyebrow">你的文明</p>
-              <h2>新汉</h2>
-              <p class="leader-name">领袖 · 武则天</p>
-            </div>
-            <span class="online-dot" title="在线"></span>
-          </div>
+      <main class="game-screen">
+        <aside class="left-sidebar glass-panel">
+          <section class="civilization-card">
+            <div class="leader-medallion">武</div>
+            <div><small>你的文明</small><h1>新汉</h1><p>武则天 · 天工开物</p></div>
+            <span class="era-score" title="时代得分">✦ <b id="eraScore">0</b></span>
+          </section>
 
-          <div class="resource-stack" aria-label="帝国资源">
-            <div class="resource-row"><span class="resource-icon food">✦</span><span>粮食</span><strong id="foodValue">+7</strong><small>每回合</small></div>
-            <div class="resource-row"><span class="resource-icon science">∿</span><span>科技</span><strong id="scienceValue">+18</strong><small>每回合</small></div>
-            <div class="resource-row"><span class="resource-icon culture">✧</span><span>文化</span><strong id="cultureValue">+11</strong><small>每回合</small></div>
-            <div class="resource-row"><span class="resource-icon gold">◈</span><span>金币</span><strong id="goldValue">143</strong><small>库存</small></div>
-          </div>
+          <section class="sidebar-block city-block">
+            <div class="section-title"><span>城市</span><b id="cityCount">1</b></div>
+            <div class="entity-list" id="cityList"></div>
+          </section>
 
-          <div class="sidebar-section">
-            <div class="section-heading"><span>城市</span><span class="section-count">1</span></div>
-            <button class="city-list-item active" id="capitalButton" type="button">
-              <span class="city-emblem">✦</span>
-              <span class="city-list-copy"><strong>长安</strong><small>人口 4 · 幸福</small></span>
-              <span class="city-yield">+5 ✦</span>
-            </button>
-            <button class="ghost-button" id="settleHintButton" type="button">＋ 建立新城市</button>
-          </div>
+          <section class="sidebar-block unit-block">
+            <div class="section-title"><span>单位</span><b id="unitCount">0</b></div>
+            <div class="entity-list scroll-list" id="unitList"></div>
+          </section>
 
-          <div class="sidebar-section compact-section">
-            <div class="section-heading"><span>军事单位</span><span class="section-count" id="unitCount">3</span></div>
-            <div class="mini-unit-list" id="miniUnitList"></div>
-          </div>
-
-          <div class="sidebar-section timeline-section">
-            <div class="section-heading"><span>文明进度</span><button class="link-button" id="techTreeButton" type="button">查看科技树 →</button></div>
-            <div class="progress-item"><div><span>写作</span><strong>已完成</strong></div><div class="progress-track"><i style="width:100%"></i></div></div>
-            <div class="progress-item"><div><span>制陶术</span><strong>72%</strong></div><div class="progress-track"><i style="width:72%"></i></div></div>
-            <div class="progress-item"><div><span>灌溉</span><strong>锁定</strong></div><div class="progress-track muted"><i style="width:15%"></i></div></div>
-          </div>
-
-          <div class="sidebar-footer"><span class="pulse"></span> 云端存档已同步 <span id="saveStamp">刚刚</span></div>
+          <section class="sidebar-block objective-block">
+            <div class="section-title"><span>时代目标</span><b id="objectiveProgress">0 / 12</b></div>
+            <p>建立帝国、完成研究、发现其他文明以获得时代得分。</p>
+            <div class="meter"><i id="objectiveMeter"></i></div>
+          </section>
         </aside>
 
-        <section class="world-column">
-          <div class="map-toolbar">
-            <div class="map-title"><span class="map-kicker">东亚 · 公元前 320 年</span><strong>长安河谷</strong></div>
-            <div class="map-tools"><button class="map-tool active" id="yieldToggle" type="button">显示产出</button><button class="map-tool" id="gridToggle" type="button">网格</button><button class="map-tool" id="zoomButton" type="button">⌕</button></div>
+        <section class="world-view">
+          <div class="map-header">
+            <div><span class="overline">已知世界</span><strong id="mapRegion">长安大陆</strong></div>
+            <div class="map-controls">
+              <button class="toggle-button active" id="yieldToggle" type="button">产出</button>
+              <button class="toggle-button active" id="gridToggle" type="button">网格</button>
+              <button class="square-button" id="zoomOutButton" type="button" aria-label="缩小地图">−</button>
+              <button class="square-button" id="zoomInButton" type="button" aria-label="放大地图">＋</button>
+            </div>
           </div>
-          <div class="map-frame" id="mapFrame">
-            <div class="map-atmosphere atmosphere-one"></div><div class="map-atmosphere atmosphere-two"></div>
-            <div class="hex-map" id="mapGrid" role="grid" aria-label="文明地图"></div>
-            <div class="map-compass" aria-hidden="true"><span>N</span><i></i><b>SE</b></div>
-            <div class="map-legend"><span><i class="legend-dot city-dot"></i>城市</span><span><i class="legend-dot unit-dot"></i>单位</span><span><i class="legend-dot selected-dot"></i>选中</span></div>
-          </div>
-          <div class="world-status"><div><span class="status-icon">⌁</span><span id="selectionStatus">选择一个地块查看详情</span></div><div class="turn-meter"><span>回合进度</span><div><i id="turnProgress"></i></div><strong id="turnLabel">24 / 100</strong></div></div>
 
-          <div class="action-dock panel">
-            <div class="selection-card" id="selectionCard"><span class="selection-art" id="selectionArt">＋</span><div><p class="eyebrow" id="selectionType">等待指令</p><h3 id="selectionName">选择一个单位或地块</h3><p id="selectionDescription">点击地图上的单位、城市或自然地貌开始探索。</p></div></div>
-            <div class="action-buttons" id="actionButtons"><button class="action-button primary" id="exploreButton" type="button">⌖ 探索地图</button><button class="action-button" id="fortifyButton" type="button">▣ 待命</button><button class="action-button" id="buildButton" type="button">＋ 建造</button></div>
+          <div class="map-viewport" id="mapViewport">
+            <div class="map-layer" id="mapLayer">
+              <div class="hex-map" id="mapGrid" role="grid" aria-label="世界地图"></div>
+            </div>
+            <div class="map-vignette"></div>
+            <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
+            <div class="map-legend"><span><i class="legend-city"></i>城市</span><span><i class="legend-unit"></i>单位</span><span><i class="legend-move"></i>可移动</span><span><i class="legend-attack"></i>可攻击</span></div>
+            <div class="map-notice" id="mapNotice" hidden></div>
+          </div>
+
+          <div class="command-bar glass-panel">
+            <div class="selection-summary">
+              <div class="selection-emblem" id="selectionEmblem">⌖</div>
+              <div><span class="overline" id="selectionType">世界地图</span><strong id="selectionName">选择单位、城市或地块</strong><p id="selectionDescription">探索未知大陆，建立一个经得起时间考验的文明。</p></div>
+            </div>
+            <div class="unit-health" id="unitHealth" hidden><span>生命</span><div><i id="unitHealthBar"></i></div><b id="unitHealthText">100</b></div>
+            <div class="command-actions" id="commandActions"></div>
           </div>
         </section>
 
-        <aside class="inspector-sidebar panel">
-          <div class="inspector-header"><div><p class="eyebrow">当前焦点</p><h2 id="inspectorTitle">长安河谷</h2></div><button class="icon-button" id="closeInspector" type="button" aria-label="关闭详情">×</button></div>
-          <div class="inspector-hero" id="inspectorHero"><span class="hero-symbol">⌁</span><div><strong id="heroTitle">河谷平原</strong><span id="heroSubtitle">草原 · 淡水</span></div></div>
-          <div class="yield-grid" id="yieldGrid"><div><span class="yield-symbol food">✦</span><strong>2</strong><small>粮食</small></div><div><span class="yield-symbol production">▰</span><strong>1</strong><small>生产力</small></div><div><span class="yield-symbol gold">◈</span><strong>0</strong><small>金币</small></div></div>
-          <div class="inspector-section"><div class="section-heading"><span>地块详情</span><span class="terrain-badge" id="terrainBadge">平原</span></div><p class="muted-copy" id="terrainCopy">肥沃的冲积土让这里适合发展一座伟大的城市。河流为农场提供额外粮食。</p><div class="feature-tags" id="featureTags"><span>淡水</span><span>可开发</span></div></div>
-          <div class="inspector-section city-inspector" id="cityInspector"><div class="section-heading"><span>城市产出</span><button class="link-button" id="cityManageButton" type="button">管理</button></div><div class="city-production"><div class="production-icon">✦</div><div><strong>纪念碑</strong><span>还需 3 回合</span></div><div class="production-progress"><i style="width:65%"></i></div></div><div class="city-stats"><span>人口 <b>4</b></span><span>住房 <b>5 / 7</b></span><span>忠诚 <b>100</b></span></div></div>
-          <div class="inspector-section event-section"><div class="section-heading"><span>最近事件</span><span class="event-time">本回合</span></div><div class="event-line"><span class="event-marker"></span><p><strong>新发现</strong><br /><span>斥候发现了北方的香料资源。</span></p></div><div class="event-line"><span class="event-marker blue"></span><p><strong>研究进度</strong><br /><span>制陶术将在 2 回合后完成。</span></p></div></div>
+        <aside class="right-sidebar glass-panel">
+          <div class="detail-heading">
+            <div><span class="overline" id="detailEyebrow">地块情报</span><h2 id="detailTitle">长安河谷</h2></div>
+            <span class="coordinate" id="detailCoordinate">3 · 5</span>
+          </div>
+
+          <div class="terrain-preview" id="terrainPreview"><span id="terrainIcon">⌁</span><div><strong id="terrainName">草原</strong><small id="terrainFeatures">淡水 · 河流</small></div></div>
+
+          <div class="yield-cards" id="tileYields"></div>
+
+          <section class="detail-section" id="tileDetailSection">
+            <div class="section-title"><span>地块详情</span><b id="ownerBadge">未拥有</b></div>
+            <p id="tileDescription">一片等待开发的肥沃土地。</p>
+            <div class="tag-list" id="tileTags"></div>
+          </section>
+
+          <section class="detail-section" id="cityDetailSection" hidden>
+            <div class="section-title"><span>城市状态</span><button class="text-button" id="manageCityButton" type="button">管理城市 →</button></div>
+            <div class="city-status-grid" id="cityStatusGrid"></div>
+            <div class="production-line"><span id="cityProductionIcon">＋</span><div><strong id="cityProductionName">选择生产</strong><small id="cityProductionTurns">等待命令</small><div class="meter"><i id="cityProductionMeter"></i></div></div></div>
+          </section>
+
+          <section class="detail-section event-log-section">
+            <div class="section-title"><span>世界纪事</span><button class="text-button" id="clearEventsButton" type="button">收起</button></div>
+            <div class="event-log" id="eventLog"></div>
+          </section>
         </aside>
       </main>
 
-      <footer class="bottom-bar"><div class="hotkeys"><span><kbd>1</kbd> 选择单位</span><span><kbd>F</kbd> 待命</span><span><kbd>␣</kbd> 结束回合</span></div><div class="build-version">CV6 WEB · 0.1.0 <span>·</span> 本地原型</div></footer>
+      <footer class="statusbar">
+        <div><span class="status-light"></span><span id="saveStatus">自动存档已启用</span></div>
+        <div class="hotkeys"><span><kbd>M</kbd> 移动</span><span><kbd>F</kbd> 驻防</span><span><kbd>R</kbd> 研究</span><span><kbd>Space</kbd> 下一回合</span></div>
+        <div>CV6 WEB · ALPHA 0.2</div>
+      </footer>
     </div>
 
-    <dialog class="modal" id="techModal"><div class="modal-heading"><div><p class="eyebrow">研究与发现</p><h2>科技树</h2></div><button class="icon-button" data-close-modal type="button" aria-label="关闭">×</button></div><p class="modal-intro">每个时代都由一个决定开启。选择下一项研究，让新汉的未来更清晰。</p><div class="tech-tree" id="techTree"></div></dialog>
-    <dialog class="modal small-modal" id="helpModal"><div class="modal-heading"><div><p class="eyebrow">新手指南</p><h2>如何游玩</h2></div><button class="icon-button" data-close-modal type="button" aria-label="关闭">×</button></div><div class="help-content"><p><strong>探索</strong>：点击地图单位，再点击相邻高亮地块移动。</p><p><strong>发展</strong>：选择长安查看城市产出，或使用定居者建立新城市。</p><p><strong>回合</strong>：完成行动后点击右上角“结束回合”，研究和生产会自动推进。</p></div></dialog>
-    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+    <dialog class="game-dialog research-dialog" id="researchModal">
+      <header><div><span class="overline">文明进步</span><h2>选择研究方向</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <div class="dialog-tabs"><button class="active" data-research-tab="tech" type="button">科技树</button><button data-research-tab="civic" type="button">市政树</button></div>
+      <div class="research-summary" id="researchSummary"></div>
+      <div class="research-grid" id="researchGrid"></div>
+    </dialog>
+
+    <dialog class="game-dialog production-dialog" id="productionModal">
+      <header><div><span class="overline">城市管理</span><h2 id="productionCityName">选择生产项目</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <div class="city-overview" id="cityOverview"></div>
+      <div class="production-tabs"><button class="active" data-production-filter="all" type="button">全部</button><button data-production-filter="unit" type="button">单位</button><button data-production-filter="building" type="button">建筑</button></div>
+      <div class="production-grid" id="productionGrid"></div>
+    </dialog>
+
+    <dialog class="game-dialog diplomacy-dialog" id="diplomacyModal">
+      <header><div><span class="overline">世界议会</span><h2>外交关系</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <p class="dialog-intro">探索世界并接触其他文明。和平可以带来繁荣，战争也会改写历史。</p>
+      <div class="diplomacy-list" id="diplomacyList"></div>
+    </dialog>
+
+    <dialog class="game-dialog menu-dialog" id="menuModal">
+      <header><div><span class="overline">CV6 WEB</span><h2>游戏菜单</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <div class="menu-actions">
+        <button id="saveGameButton" type="button"><span>▣</span><div><strong>保存游戏</strong><small>写入浏览器本地存档</small></div></button>
+        <button id="loadGameButton" type="button"><span>↻</span><div><strong>读取游戏</strong><small>恢复最近一次手动或自动存档</small></div></button>
+        <button id="newGameButton" type="button"><span>＋</span><div><strong>开始新游戏</strong><small>使用新的世界种子重新开始</small></div></button>
+        <button id="helpButton" type="button"><span>?</span><div><strong>玩法说明</strong><small>查看核心规则与快捷键</small></div></button>
+      </div>
+      <div class="save-meta" id="saveMeta">尚未读取存档信息</div>
+    </dialog>
+
+    <dialog class="game-dialog help-dialog" id="helpModal">
+      <header><div><span class="overline">文明百科</span><h2>如何开始</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <div class="help-grid">
+        <article><b>01</b><h3>探索世界</h3><p>选择单位后点击“移动”，绿色地块均可抵达。进入未知区域会驱散战争迷雾。</p></article>
+        <article><b>02</b><h3>经营城市</h3><p>人口会自动工作最有价值的领土地块。选择城市安排单位或建筑生产。</p></article>
+        <article><b>03</b><h3>研究发展</h3><p>科技解锁单位、建筑和改良设施；市政代表社会制度与文化进步。</p></article>
+        <article><b>04</b><h3>战争与胜利</h3><p>攻击其他文明会自动宣战。占领所有敌方首都，或完成全部科技以赢得胜利。</p></article>
+      </div>
+    </dialog>
+
+    <dialog class="game-dialog new-game-dialog" id="newGameModal">
+      <header><div><span class="overline">创造世界</span><h2>开始新游戏</h2></div><button class="dialog-close" data-close-dialog type="button">×</button></header>
+      <label>世界种子<input id="seedInput" type="text" autocomplete="off" /></label>
+      <label>难度<select id="difficultySelect"><option>开拓者</option><option selected>王子</option><option>国王</option><option>皇帝</option></select></label>
+      <button class="primary-dialog-button" id="confirmNewGameButton" type="button">创造世界</button>
+    </dialog>
+
+    <dialog class="game-dialog victory-dialog" id="victoryModal">
+      <div class="victory-mark">VI</div><span class="overline">历史将铭记这一刻</span><h2 id="victoryTitle">统治胜利</h2><p id="victoryText"></p><button class="primary-dialog-button" id="victoryContinueButton" type="button">回到地图</button>
+    </dialog>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+    <script src="src/data.js" defer></script>
+    <script src="src/game.js" defer></script>
     <script src="src/main.js" defer></script>
   </body>
 </html>
